@@ -3,12 +3,12 @@ from pythonserial import serialcoms
 import time
 
 msg = {
-    "nodeId": 0,
+    "nodeId": 0, 
     "userId": 0,
     "datekey": 0,
     "gps": {
-      "lat": 0,
-      "long": 0,  
+      "lat": 0, 
+      "long": 0, 
     },
     1: {
         "sensorId": 0,
@@ -40,14 +40,17 @@ while True:
         match sensor_code:
             #1010 -> Temp; 1011 -> TDS; 1101 -> Turbidity
             case 1001:
+                #TEMPERATURE
                 msg[1]["sensorId"] = sensor_code
-                msg[1]["value"] = data_value
+                msg[1]["value"] = data_value/100
                 pass
             case 1010:
+                #TDS
                 msg[2]["sensorId"] = sensor_code
                 msg[2]["value"] = data_value
                 pass
             case 1011:
+                #TURBIDITY
                 msg[3]["sensorId"] = sensor_code
                 msg[3]["value"] = data_value
                 pass

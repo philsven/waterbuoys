@@ -1,0 +1,44 @@
+START:  1001 0000 0000 0000 0000 0000 0000 0000
+
+        1110 -> TEMPERATURE
+        1010 -> TDS 
+        1100 -> TURBIDITY
+        0001
+        0010
+        0011
+        0100
+        0101
+        0110
+
+
+END:    0110 
+
+
+
+EXAMPLE: 
+
+1001                   C: 32-BIT   B: 32-BIT || 1001 0000 0000 0000 0000 0000 0000 0000 ==> 0x90 0x00 0x00 0x00
+1110    -024.50        C: 72-BIT   B: 32-BIT || 1110 1111 1111 1111 1111 0110 0110 1110 ==> 0xEF 0xFF 0xF6 0x6E
+1010    -323.54        C: 88-BIT   B: 32-BIT || 1010 1111 1111 1111 1000 0001 1001 1110 ==> 0xAF 0xFF 0x81 0x9E
+1100    -063.50        C: 72-BIT   B: 32-BIT || 1100 1111 1111 1111 1110 0111 0011 0010 ==> 0xCF 0xFF 0xE7 0x32
+0110                   C: 32-BIT   B: 32-BIT || 0110 0000 0000 0000 0000 0000 0000 0000 ==> 0x60 0x00 0x00 0x00
+
+
+Reading value --> 28-bit HEX (F FF FF FF)
+
+msg ==> sensor code(HEX) + reading(HEX)
+
+byte buff[4]; 
+float temp;
+int temp_int
+
+buff[1] = 9;
+println(buff)
+
+(float) --> (int)
+-340.67  --> -34067
+
+temp = reading.get()
+
+
+buff[1] = 
