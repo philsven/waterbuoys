@@ -8,13 +8,6 @@
 
 //Creating all nessissary IDs for protocol
 
-int Node_ID = 1;
-int USER_ID = 1001;
-int Lat = 18.00;
-int Log = 56.00;
-int Sens_Temp_ID = 3;
-int Sens_TDS_ID = 100102;
-int Sens_Turbidity_ID = 15;
 
 //Initalizing the Sensors
 
