@@ -1,1 +1,94 @@
+#include <EEPROM.h>
+#include "GravityTDS.h"
+#include <OneWire.h> 
+#include <DallasTemperature.h>
 
+#define ONE_WIRE_BUS 7
+#define TdsSensorPin A1
+
+//Creating all nessissary IDs for protocol
+
+int Node_ID = 1;
+int USER_ID = 1001;
+int Lat = 18.00;
+int Log = 56.00;
+int Sens_Temp_ID = 3;
+int Sens_TDS_ID = 100102;
+int Sens_Turbidity_ID = 15;
+
+//Initalizing the Sensors
+
+OneWire oneWire(ONE_WIRE_BUS); 
+GravityTDS gravityTds;
+DallasTemperature sensors(&oneWire);
+ 
+float tdsValue = 0;
+
+ 
+void setup()
+{
+  //callebrating the sensors
+    Serial.begin(115200);
+    sensors.begin();
+    gravityTds.setPin(TdsSensorPin);
+    gravityTds.setAref(5.0);  //reference voltage on ADC, default 5.0V on Arduino UNO
+    gravityTds.setAdcRange(1024);  //1024 for 10bit ADC;4096 for 12bit ADC
+    gravityTds.begin();  //initialization
+}
+ 
+void loop()
+{
+
+  //Getting sensor values and doing the conversions
+    sensors.requestTemperatures();
+    gravityTds.setTemperature(sensors.getTempCByIndex(0));  // set the temperature and execute temperature compensation
+    gravityTds.update();  //sample and calculate
+    tdsValue = gravityTds.getTdsValue();  // then get the value
+
+//for ( int i = 0; i < 101; i++)
+
+// Printing a basic Human Read Message
+    //Serial.print("Message #");
+//    Serial.println(i);
+   // Serial.println("Start");
+   // Serial.print("TDS value is: ");
+    //Serial.print(tdsValue,0);
+   // Serial.println("ppm");
+   // Serial.print("Temperature is: "); 
+   // Serial.print(sensors.getTempCByIndex(0));
+   // Serial.println("Celsius");
+   //Serial.println("END");
+   // Serial.println(" ");
+
+// Converting the sensor (Turbidity and TEMP) values into HEX
+  //TDS is always a whole number
+
+float TEMP = sensors.getTempCByIndex(0);
+int N_TEMP = TEMP * 100.00;
+int N_TDS = tdsValue;
+
+
+// Printing Values into HEX
+    //Serial.println("Temp * 100");
+    //Serial.println(N_TEMP);
+    //Serial.println("New temp in Hex");
+    
+    Serial.println(N_TEMP,HEX);
+    Serial.println(N_TDS,HEX);
+
+
+  //Correcting the HEX values into the correct length 7 characters or 28bit hex number
+  
+
+  //Creating the message packet
+
+
+    delay(3000);
+
+   
+}
+
+
+// TO be sent from the ardunio GPS
+  // Lat log
+  
